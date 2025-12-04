@@ -54,10 +54,8 @@ pipeline {
         stage("Upload-Artifacts-Nexus"){
             steps {
 
-             
                 script {
                     def snapshotVersion = "1.0.0-${env.BUILD_NUMBER}-SNAPSHOT"
-
                     echo "Uploading version: ${snapshotVersion}"
 
                     nexusArtifactUploader(
@@ -85,8 +83,11 @@ pipeline {
 
         stage("Deploy-Dev"){
             steps {
-
-                echo "Deploying....Dev Servers..."
+                sshagent(['jenkins-aws-ssh-creds']) {
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no ubuntu@65.0.251.218 "echo 'SSH Connection Successful from Jenkins!'"
+                    '''
+                }
             }
         }
 
