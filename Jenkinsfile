@@ -56,10 +56,10 @@ pipeline {
 
                 script {
                     def snapshotVersion = "1.0.0-${env.BUILD_NUMBER}-SNAPSHOT"
-                    def jarFileName = "${env.WORKSPACE}/food_order/dist/anagrams.jar"
+                    env.JAR_FILE_PATH = "${env.WORKSPACE}/food_order/dist/anagrams.jar"
                     echo "Uploading version: ${snapshotVersion}"
 
-                    echo "Printing file name: ${jarFileName}"
+                    echo "Printing Jarfile Path: ${env.JAR_FILE_PATH}"
 
                     nexusArtifactUploader(
                         nexusVersion: 'nexus3',
@@ -72,7 +72,7 @@ pipeline {
                         artifacts: [
                             [
                                 artifactId: 'anagrams',
-                                file: jarFileName,
+                                file: env.JAR_FILE_PATH,
                                 type: "jar",
                                 classifier: ""
                             ]
@@ -88,7 +88,7 @@ pipeline {
             steps {
                 sshagent(['jenkins-aws-ssh-creds']) {
                     sh """
-                        scp -o StrictHostKeyChecking=no ${jarFileName} ubuntu@65.0.251.218:/home/ubuntu
+                        scp -o StrictHostKeyChecking=no ${env.JAR_FILE_PATH,} ubuntu@65.0.251.218:/home/ubuntu
                     """
                 }
             }
@@ -98,7 +98,7 @@ pipeline {
             steps {
                 sshagent(['jenkins-aws-ssh-creds']) {
                     sh """
-                        scp -o StrictHostKeyChecking=no ${jarFileName} ubuntu@43.204.211.49:/home/ubuntu
+                        scp -o StrictHostKeyChecking=no ${env.JAR_FILE_PATH,} ubuntu@43.204.211.49:/home/ubuntu
                     """
                 }
             }
@@ -108,7 +108,7 @@ pipeline {
             steps {
                 sshagent(['jenkins-aws-ssh-creds']) {
                     sh """
-                        scp -o StrictHostKeyChecking=no ${jarFileName} ubuntu@13.200.235.238:/home/ubuntu
+                        scp -o StrictHostKeyChecking=no ${env.JAR_FILE_PATH,} ubuntu@13.200.235.238:/home/ubuntu
                     """
                 }
             }
