@@ -56,8 +56,10 @@ pipeline {
 
                 script {
                     def snapshotVersion = "1.0.0-${env.BUILD_NUMBER}-SNAPSHOT"
-                    def jarFileNmae = "${env.WORKSPACE}/Food-Order/Food-Order-System/food_order/dist/anagrams.jar"
+                    def jarFileName = "${env.WORKSPACE}/Food-Order/Food-Order-System/food_order/dist/anagrams.jar"
                     echo "Uploading version: ${snapshotVersion}"
+
+                    echo "Printing file name: ${jarFileName}"
 
                     nexusArtifactUploader(
                         nexusVersion: 'nexus3',
@@ -70,7 +72,7 @@ pipeline {
                         artifacts: [
                             [
                                 artifactId: 'anagrams',
-                                file: jarFileNmae,
+                                file: jarFileName,
                                 type: "jar",
                                 classifier: ""
                             ]
