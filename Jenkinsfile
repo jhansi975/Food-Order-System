@@ -24,7 +24,7 @@ pipeline {
             steps {
                
                script {
-                    withSonarQubeEnv( installationName: 'dev-sonar-01', credentialsId: 'jenkins-sonar-creds') {
+                    withSonarQubeEnv( installationName: 'sonarqube', credentialsId: 'sonar-token') {
                         sh """
                             cd food_order
                             sonar-scanner \
