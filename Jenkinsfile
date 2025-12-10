@@ -20,24 +20,21 @@ pipeline {
             }
         }
 
-        stage("Sonar-Scanning") {
-            steps {
-               script {
-                     def scannerHome = tool 'SonarScanner'
-
-                     withSonarQubeEnv('sonarqube') {
-                        sh """
-                           cd food_order
-                        ${scannerHome}/bin/sonar-scanner \
-                          -Dsonar.projectKey=Food-Order-System \
-                          -Dsonar.projectName=Food-Order-System \
-                          -Dsonar.sources=. \
-                          -Dsonar.sourceEncoding=UTF-8
-                     """
-            }
+       stage('Sonar-Scanning') {
+    steps {
+        withSonarQubeEnv('sonarqube') {
+            sh """
+              cd food_order
+              ${tool 'SonarScanner'}/bin/sonar-scanner \
+              -Dsonar.projectKey=Food-Order-System \
+              -Dsonar.projectName=Food-Order-System \
+              -Dsonar.sources=. \
+              -Dsonar.sourceEncoding=UTF-8
+            """
         }
     }
 }
+
         stage("Sonar Quality Gate") {
             steps {
                 script {
