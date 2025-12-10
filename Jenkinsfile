@@ -75,8 +75,7 @@ pipeline {
                         file: jarPath,
                         type: 'jar'
                     ]
-                ],
-                failOnError: true
+                ]
             )
         }
     }
